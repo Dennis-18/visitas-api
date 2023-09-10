@@ -23,7 +23,6 @@ const postUserRole = (req, res = response) => {
     if (!description) {
        return res.status(405).json({message: "bad request"});
     }
-
     const query = `insert into user_roles(description, state) values('${description}', 1);`
     pool.query(query, (error, results) => {
         if (error) {
