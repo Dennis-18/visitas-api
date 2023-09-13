@@ -1,6 +1,6 @@
-const {response, request} = require("express");
-const {pool } = require("../db/db-config");
-const getUserRoles = (req = request, res = response) => {
+import {response, request} from "express";
+import {pool } from "../db/db-config.js";
+export const getUserRoles = (req = request, res = response) => {
     const {roleId} = req.query;
 
     let query = "select * from user_roles where state = 1";
@@ -17,7 +17,7 @@ const getUserRoles = (req = request, res = response) => {
     })
 }
 
-const postUserRole = (req, res = response) => {
+export const postUserRole = (req, res = response) => {
     const { description } = req.body;
 
     if (!description) {
@@ -34,7 +34,7 @@ const postUserRole = (req, res = response) => {
     })
 };
 
-const putUserRole = (req, res = response) => {
+export const putUserRole = (req, res = response) => {
     const {roleId} = req.params;
     const {description} = req.body;
     const query =  `update user_roles set description = '${description}' where id_role = ${roleId}`
@@ -47,7 +47,7 @@ const putUserRole = (req, res = response) => {
     })
 };
 
-const deleteUserRole = (req, res = response) => {
+export const deleteUserRole = (req, res = response) => {
     const {roleId} = req.params;
     const query =  `update user_roles set state = 0 where id_role = ${roleId}`
     pool.query(query, (error, results) => {
@@ -58,9 +58,3 @@ const deleteUserRole = (req, res = response) => {
         return res.status(200).json({message: "deleted"});
     })
 };
-module.exports = {
-    getUserRoles,
-    postUserRole,
-    putUserRole,
-    deleteUserRole
-}

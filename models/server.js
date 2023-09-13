@@ -1,14 +1,18 @@
-const express = require('express');
-const cors = require("cors");
-require("dotenv").config();
-class Server {
+
+import express from "express";
+import cors from "cors";
+import dotEnv from "dotenv";
+dotEnv.config();
+
+import userRolesMiddlewares from "../routes/user-roles.routes.js";
+import usersMiddlewares from "../routes/users.routes.js";
+export class Server {
     constructor() {
         this.app = express();
         this.port = process.env.PORT;
         this.userRolesPath = "/api/roles";
-        //middlewares
+        this.usersPath = "/api/users";
         this.middlewares();
-        //app routes
         this.routes();
     }
 
@@ -19,7 +23,8 @@ class Server {
     }
 
     routes() {
-        this.app.use(this.userRolesPath, require("../routes/user-roles.routes"));
+        this.app.use(this.userRolesPath, userRolesMiddlewares);
+        this.app.use(this.usersPath, usersMiddlewares);
     }
 
     listen() {
@@ -28,5 +33,3 @@ class Server {
         });
     }
 }
-
-module.exports = Server;
