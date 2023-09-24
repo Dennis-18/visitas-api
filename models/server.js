@@ -6,6 +6,7 @@ dotEnv.config();
 
 import userRolesMiddlewares from "../routes/user-roles.routes.js";
 import usersMiddlewares from "../routes/users.routes.js";
+import authMiddlewares from "../routes/auth.routes.js";
 export class Server {
     constructor() {
         this.app = express();
@@ -13,6 +14,7 @@ export class Server {
         this.authPath = "api/auth";
         this.userRolesPath = "/api/roles";
         this.usersPath = "/api/users";
+        this.authPath = "/api/auth";
         this.middlewares();
         this.routes();
     }
@@ -26,6 +28,7 @@ export class Server {
     routes() {
         this.app.use(this.userRolesPath, userRolesMiddlewares);
         this.app.use(this.usersPath, usersMiddlewares);
+        this.app.use(this.authPath, authMiddlewares);
     }
 
     listen() {
